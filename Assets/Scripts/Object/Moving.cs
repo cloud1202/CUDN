@@ -26,7 +26,7 @@ public class Moving : MonoBehaviour
             if (transform.position == changePos) isChange = false;
             else isChange = true;
 
-            if (transform.position.y < changePos.y) yield return new WaitForSeconds(0.9f);
+            if (transform.position.y < changePos.y) yield return new WaitForSeconds(0.96f);
             else if (transform.position.y >= changePos.y) yield return null;
             transform.position = changePos;
         }

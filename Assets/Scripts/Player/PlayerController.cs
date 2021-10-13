@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public GameObject player;
     float speed = 50000.0f;
     Vector3 firstTap, gap;
-    bool isSpace = false;
+    int isSpace = 2;
 
     void Awake()
     {
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isSpace)
+        if (Input.GetKeyDown(KeyCode.Space) && (isSpace > 0))
         {
             PlayerJump();
         }
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         playerAnime.SetBool("isJump", true);
         playerRb.AddForce(gameObject.transform.up * speed);
-        isSpace = true;
+        isSpace -= 1;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Board")
         {
             playerAnime.SetBool("isJump", false);
-            isSpace = false;
+            isSpace = 2;
         }
 
         // 떨어지는 중 센서에 닿으면 게임 끝

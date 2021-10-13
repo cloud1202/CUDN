@@ -26,7 +26,7 @@ public class BoardGenerator : GeneratorManager<BoardMove>
         while (true)
         {
             isBoard = Random.Range(0, boardPer) > 0 ? true : false;
-            yield return new WaitForSeconds(0.45f);
+            yield return new WaitForSeconds(0.48f);
             if (isBoard)
             {
                 var obj = GeneratorManager<BoardMove>.Instance.GetObject(boardQueue, boardPrefab, instance.transform);
