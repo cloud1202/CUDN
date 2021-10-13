@@ -7,6 +7,7 @@ public class GeneratorMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         StartCoroutine(Move());
     }
 
@@ -25,7 +26,7 @@ public class GeneratorMove : MonoBehaviour
             else
             {
                 roadHeight = Random.Range(0, 3);
-                finalPos = new Vector3(transform.position.x, -3.0f + roadHeight * -2.5f, transform.position.z);
+                finalPos = new Vector3(transform.position.x, Moving.changePos.y + 1.0f + roadHeight * 2.5f, transform.position.z);
                 isMove = true;
                 if (transform.position == finalPos) yield return new WaitForSeconds(0.3f);
             }
