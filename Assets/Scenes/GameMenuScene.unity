@@ -1117,7 +1117,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 368698274}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2792527068087916451, guid: bc775090cbdfb534c9261cd7df277048,
+          type: 3}
+        m_MethodName: Defender
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &368698274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1502,7 +1514,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 549765144}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2792527068087916451, guid: bc775090cbdfb534c9261cd7df277048,
+          type: 3}
+        m_MethodName: Eatter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &549765144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2915,7 +2939,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1373044387}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2792527068087916451, guid: bc775090cbdfb534c9261cd7df277048,
+          type: 3}
+        m_MethodName: Jumper
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1373044387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4293,7 +4329,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2045085570}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: fccb9a48b6f20854b95ec93c2cd848ff, type: 3}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2045085570
 MonoBehaviour:
   m_ObjectHideFlags: 0

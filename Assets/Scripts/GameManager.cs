@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private GameManager() { }
     private static GameManager instance;
 
+    public GameObject playObjects;
     [SerializeField]
     public bool gameEasy;
     [SerializeField]
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
+        playObjects.SetActive(false);
+        Time.timeScale = 0;
         if (instance)
         {
             // hierarchy에 GameManager 오브젝트가 존재 하는 경우 이 오브젝트 파괴
@@ -56,11 +59,19 @@ public class GameManager : MonoBehaviour
         isGame = true;
         UiManager.Instance.gameMenu.SetActive(false);
         UiManager.Instance.textUi.SetActive(true);
+        UiManager.Instance.formButton.SetActive(true);
+        UiManager.Instance.ExitBtnText();
         UiManager.Instance.InitText();
+        UiManager.Instance.StartBtn.onClick.AddListener(OnClickStartBtn);
+        playObjects.SetActive(true);
         Time.timeScale = 1;
-        SceneManager.LoadScene("GameScene");
     }
 
+    public void GameReset()
+    {
+        SceneManager.LoadScene("sample");
+        OnClickStartBtn();
+    }
     public void GameStop()
     {
         if (Time.timeScale > 0)
@@ -79,13 +90,14 @@ public class GameManager : MonoBehaviour
     {
         isGame = false;
         Time.timeScale = 0;
+        UiManager.Instance.ExitBtnText();
         UiManager.Instance.gameMenu.SetActive(true);
         UiManager.Instance.GameMenuTitle();
     }
 
     public void OnClickExitBtn()
     {
-        if (SceneManager.GetActiveScene().name == "GameMenuScene")
+        if (!isGame)
         {
             // 실행 프로그램에 따라 다른 종료 방법
 #if UNITY_EDITOR
@@ -94,11 +106,12 @@ public class GameManager : MonoBehaviour
             Application.Quit();
 #endif
         }
-        else if (SceneManager.GetActiveScene().name == "GameScene")
+        else
         {
             UiManager.Instance.InitText();
             UiManager.Instance.textUi.SetActive(false);
-            SceneManager.LoadScene("GameMenuScene");
+            UiManager.Instance.ExitBtnText();
+            playObjects.SetActive(false);
         }
        
     }

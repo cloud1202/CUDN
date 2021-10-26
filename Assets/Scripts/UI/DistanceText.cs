@@ -15,9 +15,8 @@ public class DistanceText : MonoBehaviour
     public void DistanceUpdate()
     {
         distance += Time.deltaTime;
-        // 소수점 둘째 자리까지 반올림
-        distance = Mathf.Round(distance * 100) * 0.01f;
-        distanceTxt.text = distance + "";
+        // 소수점 첫째 자리만 츨력
+        distanceTxt.text = $"{distance:F1}";
     }
 
     public void InitDistance()

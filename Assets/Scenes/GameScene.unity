@@ -1410,23 +1410,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1236358765}
     m_Modifications:
-    - target: {fileID: 543876538, guid: bc775090cbdfb534c9261cd7df277048, type: 3}
-      propertyPath: m_Constraints
-      value: 114
-      objectReference: {fileID: 0}
-    - target: {fileID: 543876539, guid: bc775090cbdfb534c9261cd7df277048, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5963963587158746638, guid: bc775090cbdfb534c9261cd7df277048,
         type: 3}
       propertyPath: m_Name
       value: CUDN_Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5963963587158746638, guid: bc775090cbdfb534c9261cd7df277048,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6453537200075603124, guid: bc775090cbdfb534c9261cd7df277048,
         type: 3}

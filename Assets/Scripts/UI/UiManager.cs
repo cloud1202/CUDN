@@ -11,10 +11,12 @@ public class UiManager : UI_Base
     private static UiManager instance;
 
     [HideInInspector]
-    public GameObject gameMenu, option, textUi;
-
+    public GameObject gameMenu, option, textUi, formButton;
+    [HideInInspector]
+    public Button StartBtn, ExitBtn;
     // UI 이름 열거형으로 저장
-    enum GameObjects { GameMenu, Option, TextUI }
+    enum GameObjects { GameMenu, Option, TextUI, FormButton, EatterCoolDown, DefenderCoolDown, JumperCoolDown, BoosterCoolDown }
+    enum Buttons { StartBtn, OptionBtn, ExitBtn, Eatter, Defender, Jumper, Booster }
     enum Texts { MenuTitleTxt, StartTxt, OptionTxt, ExitTxt, DifficultyTxt, EasyTxt, NomalTxt, BackTxt, DistanceTxt, ItemEatTxt }
     public static UiManager Instance
     {
@@ -44,16 +46,26 @@ public class UiManager : UI_Base
     {
         // hierarchy에 이름과 동일한 오브젝트 찾아서 저장
         base.Bind<GameObject>(typeof(GameObjects));
+        base.Bind<Button>(typeof(Buttons));
         base.Bind<TextMeshProUGUI>(typeof(Texts));
+        
+        base.Get<GameObject>((int)GameObjects.EatterCoolDown).SetActive(false);
+        base.Get<GameObject>((int)GameObjects.DefenderCoolDown).SetActive(false);
+        base.Get<GameObject>((int)GameObjects.JumperCoolDown).SetActive(false);
+        base.Get<GameObject>((int)GameObjects.BoosterCoolDown).SetActive(false);
 
         gameMenu = base.Get<GameObject>((int)GameObjects.GameMenu);
         option = base.Get<GameObject>((int)GameObjects.Option);
         textUi = base.Get<GameObject>((int)GameObjects.TextUI);
+        formButton = base.Get<GameObject>((int)GameObjects.FormButton);
+
+        StartBtn = base.Get<Button>((int)Buttons.StartBtn);
+        ExitBtn = base.Get<Button>((int)Buttons.ExitBtn);
 
         option.SetActive(false);
         textUi.SetActive(false);
+        formButton.SetActive(false);
     }
-
 
     public void DifficultyText()
     {
@@ -74,7 +86,7 @@ public class UiManager : UI_Base
     {
         // 게임 메뉴 타이틀 스코어 전환
         int score = base.Get<TextMeshProUGUI>((int)Texts.ItemEatTxt).GetComponent<ScoreText>().itemEat + (int)(Mathf.Round(base.Get<TextMeshProUGUI>((int)Texts.DistanceTxt).GetComponent<DistanceText>().distance) * 0.1);
-        base.Get<TextMeshProUGUI>((int)Texts.MenuTitleTxt).text = "Score : " + score; 
+        base.Get<TextMeshProUGUI>((int)Texts.MenuTitleTxt).text = "Score : " + score;
     }
 
     public void ScoreUpdate()
@@ -87,5 +99,48 @@ public class UiManager : UI_Base
         // 거리 Text 업데이트
         base.Get<TextMeshProUGUI>((int)Texts.DistanceTxt).GetComponent<DistanceText>().DistanceUpdate();
     }
-    
+
+    public void ExitBtnText()
+    {
+        if (base.Get<TextMeshProUGUI>((int)Texts.ExitTxt).text == "Exit")
+        {
+            base.Get<TextMeshProUGUI>((int)Texts.ExitTxt).text = "Menu";
+        }
+        else
+        {
+            base.Get<TextMeshProUGUI>((int)Texts.ExitTxt).text = "Exit";
+        }
+    }
+
+    public void StartBtnText()
+    {
+        if (base.Get<TextMeshProUGUI>((int)Texts.StartTxt).text == "Start")
+        {
+            base.Get<TextMeshProUGUI>((int)Texts.StartTxt).text = "RE START";
+            StartBtn.onClick.RemoveAllListeners();
+        }
+        else
+        {
+            base.Get<TextMeshProUGUI>((int)Texts.StartTxt).text = "Start";
+            StartBtn.onClick.RemoveAllListeners();
+        }
+    }
+
+    //쿨다운 활성화
+    public void CoolDownActivation(GameObject ability)
+    {
+        GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), ability.name + "CoolDown"));
+        selectAbility.SetActive(true);
+    }
+
+    public void CoolDownTimeUpdate(GameObject ability, float coolDownTime)
+    {
+        GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), ability.name+"CoolDown"));
+        selectAbility.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{coolDownTime:F1}";
+    }
+    public void CoolDownDisable(GameObject ability)
+    {
+        GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), ability.name + "CoolDown"));
+        selectAbility.SetActive(false);
+    }
 }
