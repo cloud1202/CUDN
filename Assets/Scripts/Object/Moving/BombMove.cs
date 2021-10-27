@@ -14,6 +14,6 @@ public class BombMove : HorizontalMove
     private void Update()
     {
         base.ObjectMove();
-        if (transform.position.x <= base.destroyPos) BombGenerator.objectDestroy(this);
+        if (transform.position.x <= base.destroyPosX) BombGenerator.objectDestroy(this);
     }
 }

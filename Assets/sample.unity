@@ -1794,6 +1794,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2792527068087916451, guid: bc775090cbdfb534c9261cd7df277048,
+          type: 3}
+        m_MethodName: Defender
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &368698274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1977,10 +1989,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 863967373}
     m_Modifications:
-    - target: {fileID: 93484294, guid: bc775090cbdfb534c9261cd7df277048, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5963963587158746638, guid: bc775090cbdfb534c9261cd7df277048,
         type: 3}
       propertyPath: m_Name
@@ -2314,6 +2322,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 549765141}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2792527068087916451, guid: bc775090cbdfb534c9261cd7df277048,
+          type: 3}
+        m_MethodName: Eatter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4496,6 +4516,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2792527068087916451, guid: bc775090cbdfb534c9261cd7df277048,
+          type: 3}
+        m_MethodName: Jumper
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1373044387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6555,6 +6587,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 2045085567}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2792527068087916451, guid: bc775090cbdfb534c9261cd7df277048,
+          type: 3}
+        m_MethodName: Booster
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

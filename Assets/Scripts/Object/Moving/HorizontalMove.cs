@@ -5,12 +5,14 @@ using UnityEngine;
 public class HorizontalMove : MonoBehaviour, IMove
 {
     private int moveSpeed = 10;
-    Vector3 pos;
-    protected float destroyPos = -45.0f;
+    protected float destroyPosX = -45.0f;
 
-    public void ObjectMove()
+    public void ObjectMove(Vector3 finalPos = new Vector3())
     {
-        pos = new Vector3(destroyPos, transform.position.y, transform.position.z);
-        gameObject.transform.position = Vector3.MoveTowards(transform.position, pos, moveSpeed * Time.deltaTime);
+        if (finalPos == new Vector3())
+        {
+            finalPos = new Vector3(destroyPosX, transform.position.y, transform.position.z);
+        }
+        gameObject.transform.position = Vector3.MoveTowards(transform.position, finalPos, moveSpeed * Time.deltaTime);
     }
 }

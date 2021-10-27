@@ -6,7 +6,6 @@ public class VerticalMove : MonoBehaviour
 {
     float defaultPosY;
     public static Vector3 changePos;
-    bool isChange;
     int randHeight = 0;
     void Start()
     {
@@ -23,8 +22,6 @@ public class VerticalMove : MonoBehaviour
 
             randHeight = Random.Range(0, 3);
             changePos = new Vector3(transform.position.x, defaultPosY + randHeight * 4.0f, transform.position.z);
-            if (transform.position == changePos) isChange = false;
-            else isChange = true;
 
             if (transform.position.y < changePos.y) yield return new WaitForSeconds(1.2f);
             else if (transform.position.y >= changePos.y) yield return null;

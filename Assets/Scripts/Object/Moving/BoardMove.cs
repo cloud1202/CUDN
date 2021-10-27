@@ -7,6 +7,6 @@ public class BoardMove : HorizontalMove
     private void Update()
     {
         base.ObjectMove();
-        if (transform.position.x <= base.destroyPos) BoardGenerator.objectDestroy(this);
+        if (transform.position.x <= base.destroyPosX) BoardGenerator.objectDestroy(this);
     }
 }

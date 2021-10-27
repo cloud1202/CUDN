@@ -4,37 +4,43 @@ using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour
 {
-    Player player;
-
+    [HideInInspector]
+    public static Player player;
+    [HideInInspector]
+    public static GameObject absorption;
     private void Awake()
     {
         player = GetComponent<Player>();
+        absorption = transform.Find("Absorption").gameObject;
     }
 
     public void ClickAbility(GameObject ability)
     {
+        if (player.ability == ability.name) { return; }
         float coolDownTime = 1.0f;
+        player.ability = ability.name;
         AbilityCoolDown.instance.CoolDownEnable(ability, coolDownTime);
 
     }
     public void Eatter()
     {
-        Debug.Log(player);
-        transform.Find("Absorption").gameObject.SetActive(true);
+        player.maxJump = 1;
+        player.isAbsorption = true;
+        absorption.SetActive(true);
     }
     public void Defender()
     {
-        Debug.Log("def");
-        transform.Find("Absorption").gameObject.SetActive(false);
+        player.maxJump = 1;
+        absorption.SetActive(false);
     }
     public void Jumper()
     {
-        Debug.Log("jump");
-        transform.Find("Absorption").gameObject.SetActive(false);
+        player.maxJump = 2;
+        absorption.SetActive(false);
     }
     public void Booster()
     {
-        Debug.Log("boost");
-        transform.Find("Absorption").gameObject.SetActive(false);
+        player.maxJump = 1;
+        absorption.SetActive(false);
     }
 }

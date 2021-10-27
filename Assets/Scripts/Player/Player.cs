@@ -7,16 +7,31 @@ public class Player : MonoBehaviour
     Rigidbody playerRb;
     Animator playerAnime;
 
+  
+    // player status
     [HideInInspector]
+    public float defence = 0;
+    [HideInInspector]
+    public int maxJump = 1;
+    [HideInInspector]
+    public bool isAbsorption;
+    [HideInInspector]
+    public string  ability;
+
     float speed = 50000.0f;
+    //
 
     [HideInInspector]
-    public int jumpCount = 1;
+    public int jumpCount;
+    [HideInInspector]
     public bool isJump;
+
+
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         playerAnime = GetComponent<Animator>();
+        jumpCount = maxJump;
     }
 
     public void PlayerJump()
@@ -32,7 +47,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Board")
         {
             playerAnime.SetBool("isJump", false);
-            jumpCount = 2;
+            jumpCount = maxJump;
             isJump = false;
         }
 
@@ -43,8 +58,4 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void doers()
-    {
-
-    }
 }

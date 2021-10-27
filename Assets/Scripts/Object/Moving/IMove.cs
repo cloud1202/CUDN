@@ -1,4 +1,5 @@
-﻿public interface IMove
+﻿using UnityEngine;
+public interface IMove
 {
-    void ObjectMove();
+    void ObjectMove(Vector3 finalPos = new Vector3());
 }
