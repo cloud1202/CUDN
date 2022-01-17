@@ -5,42 +5,59 @@ using UnityEngine;
 public class PlayerAbility : MonoBehaviour
 {
     [HideInInspector]
-    public static Player player;
-    [HideInInspector]
     public static GameObject absorption;
+
     private void Awake()
     {
-        player = GetComponent<Player>();
         absorption = transform.Find("Absorption").gameObject;
     }
 
     public void ClickAbility(GameObject ability)
     {
-        if (player.ability == ability.name) { return; }
+        if (Player.ability == ability.name || Player.isBoost) { return; }
+
+        if(ability.name == "Booster" && !Player.isBoosterGauge) { return; }
+        Player.ability = ability.name;
         float coolDownTime = 1.0f;
-        player.ability = ability.name;
         AbilityCoolDown.instance.CoolDownEnable(ability, coolDownTime);
 
     }
     public void Eatter()
     {
-        player.maxJump = 1;
-        player.isAbsorption = true;
+        if (Player.isBoost) { return; }
+        Player.maxJump = 1;
+        Player.isAbsorption = true; 
+        Player.isDefence = false;
         absorption.SetActive(true);
     }
     public void Defender()
     {
-        player.maxJump = 1;
+        if (Player.isBoost) { return; }
+        Player.maxJump = 1;
+        Player.isDefence = true;
         absorption.SetActive(false);
     }
     public void Jumper()
     {
-        player.maxJump = 2;
+        if (Player.isBoost) { return; }
+        Player.maxJump = 2;
+        Player.isDefence = false;
         absorption.SetActive(false);
     }
     public void Booster()
     {
-        player.maxJump = 1;
-        absorption.SetActive(false);
+        if (Player.isBoosterGauge)
+        {
+            Player.playerRb.useGravity = false;
+            Player.isBoost = true;
+            Time.timeScale = 2;
+            UiManager.Instance.BoosterGaugeEmpty();
+            Player.isDefence = true;
+            absorption.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("게이지가 덜참");
+        }
     }
 }

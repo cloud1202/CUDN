@@ -25,7 +25,8 @@ public class BoardGenerator : GeneratorManager<BoardMove>
     {
         while (true)
         {
-            isBoard = Random.Range(0, boardPer) > 0 ? true : false;
+            //isBoard = Random.Range(0, boardPer) > 0 ? true : false;
+            isBoard = true;
             yield return new WaitForSeconds(0.48f);
             if (isBoard)
             {

@@ -56,21 +56,27 @@ public class GameManager : MonoBehaviour
 
     public void OnClickStartBtn()
     {
-        isGame = true;
-        UiManager.Instance.gameMenu.SetActive(false);
-        UiManager.Instance.textUi.SetActive(true);
-        UiManager.Instance.formButton.SetActive(true);
-        UiManager.Instance.ExitBtnText();
-        UiManager.Instance.InitText();
-        UiManager.Instance.StartBtn.onClick.AddListener(OnClickStartBtn);
-        playObjects.SetActive(true);
-        Time.timeScale = 1;
+        if (isGame)
+        {
+            isGame = false;
+            SceneManager.LoadScene("sample");
+        }
+        else
+        {
+            isGame = true;
+            UiManager.Instance.gameMenu.SetActive(false);
+            UiManager.Instance.textUi.SetActive(true);
+            UiManager.Instance.formButton.SetActive(true);
+            UiManager.Instance.ExitBtnText();
+            UiManager.Instance.InitText();
+            UiManager.Instance.StartBtn.onClick.AddListener(OnClickStartBtn);
+            playObjects.SetActive(true);
+            Time.timeScale = 1;
+        }
     }
 
     public void GameReset()
     {
-        SceneManager.LoadScene("sample");
-        OnClickStartBtn();
     }
     public void GameStop()
     {

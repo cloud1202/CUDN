@@ -10,6 +10,10 @@ public class CoinMove : HorizontalMove
         if (other.tag == "Player")
         {
             playerPos = new Vector3();
+            if (!Player.isBoosterGauge)
+            {
+                UiManager.Instance.BoosterGaugeFill();
+            }
             CoinGenerator.objectDestroy(this);
             UiManager.Instance.ScoreUpdate();
         }

@@ -17,6 +17,7 @@ public class UiManager : UI_Base
     // UI 이름 열거형으로 저장
     enum GameObjects { GameMenu, Option, TextUI, FormButton, EatterCoolDown, DefenderCoolDown, JumperCoolDown, BoosterCoolDown }
     enum Buttons { StartBtn, OptionBtn, ExitBtn, Eatter, Defender, Jumper, Booster }
+    enum Images { Gauge}
     enum Texts { MenuTitleTxt, StartTxt, OptionTxt, ExitTxt, DifficultyTxt, EasyTxt, NomalTxt, BackTxt, DistanceTxt, ItemEatTxt }
     public static UiManager Instance
     {
@@ -48,7 +49,8 @@ public class UiManager : UI_Base
         base.Bind<GameObject>(typeof(GameObjects));
         base.Bind<Button>(typeof(Buttons));
         base.Bind<TextMeshProUGUI>(typeof(Texts));
-        
+        base.Bind<Image>(typeof(Images));
+
         base.Get<GameObject>((int)GameObjects.EatterCoolDown).SetActive(false);
         base.Get<GameObject>((int)GameObjects.DefenderCoolDown).SetActive(false);
         base.Get<GameObject>((int)GameObjects.JumperCoolDown).SetActive(false);
@@ -142,5 +144,19 @@ public class UiManager : UI_Base
     {
         GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), ability.name + "CoolDown"));
         selectAbility.SetActive(false);
+    }
+
+    public void BoosterGaugeFill()
+    {
+        if (Gauge.GaugeFill(base.Get<Image>((int)Images.Gauge))) 
+        {
+            // 부스터 UI 강조하는 메서드 추가
+            Player.isBoosterGauge = true;
+        }
+    }
+    public void BoosterGaugeEmpty()
+    {
+        //Gauge.GaugeEmpty(base.Get<Image>((int)Images.Gauge));
+        StartCoroutine(Gauge.GaugeEmpty(base.Get<Image>((int)Images.Gauge)));
     }
 }

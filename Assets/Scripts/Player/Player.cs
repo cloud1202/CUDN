@@ -4,34 +4,41 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    Rigidbody playerRb;
+    public static Rigidbody playerRb;
     Animator playerAnime;
-
+    Vector3 playerPos;
   
     // player status
     [HideInInspector]
-    public float defence = 0;
+    public static bool isDefence = false;
     [HideInInspector]
-    public int maxJump = 1;
+    public static int maxJump = 1;
     [HideInInspector]
-    public bool isAbsorption;
+    public static bool isAbsorption = true;
     [HideInInspector]
-    public string  ability;
+    public static bool isBoosterGauge = false;
+    [HideInInspector]
+    public static bool isBoost = false;
+    // 기본 능력 -> [흡입 능력]
+    [HideInInspector]
+    public static string ability = "Eatter";
 
     float speed = 50000.0f;
     //
-
+    public static Vector3 lastTouchPos;
     [HideInInspector]
     public int jumpCount;
     [HideInInspector]
-    public bool isJump;
+    public static bool isJump;
 
 
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         playerAnime = GetComponent<Animator>();
+        playerPos = gameObject.transform.position;
         jumpCount = maxJump;
+        lastTouchPos = transform.position;
     }
 
     public void PlayerJump()
@@ -40,6 +47,11 @@ public class Player : MonoBehaviour
         playerRb.AddForce(gameObject.transform.up * speed);
         jumpCount -= 1;
         isJump = true;
+    }
+    public void PlayerVerticalMove(Vector3 touchPos)
+    {
+        lastTouchPos = touchPos;
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, touchPos.y, transform.position.z), 13 * Time.deltaTime);
     }
     private void OnCollisionEnter(Collision collision)
     {
