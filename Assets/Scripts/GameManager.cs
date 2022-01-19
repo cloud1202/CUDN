@@ -52,27 +52,22 @@ public class GameManager : MonoBehaviour
         {
             GameStop();
         }
+        UiManager.Instance.DistanceUpdate();
+
     }
 
     public void OnClickStartBtn()
     {
-        if (isGame)
-        {
-            isGame = false;
-            SceneManager.LoadScene("sample");
-        }
-        else
-        {
+        
             isGame = true;
             UiManager.Instance.gameMenu.SetActive(false);
             UiManager.Instance.textUi.SetActive(true);
             UiManager.Instance.formButton.SetActive(true);
             UiManager.Instance.ExitBtnText();
             UiManager.Instance.InitText();
-            UiManager.Instance.StartBtn.onClick.AddListener(OnClickStartBtn);
             playObjects.SetActive(true);
             Time.timeScale = 1;
-        }
+        
     }
 
     public void GameReset()
@@ -114,10 +109,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            UiManager.Instance.InitText();
+            SceneManager.LoadScene("sample");
             UiManager.Instance.textUi.SetActive(false);
+            UiManager.Instance.formButton.SetActive(false);
             UiManager.Instance.ExitBtnText();
+            UiManager.Instance.InitText();
             playObjects.SetActive(false);
+            Time.timeScale = 1;
         }
        
     }

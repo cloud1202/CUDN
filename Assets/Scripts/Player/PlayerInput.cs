@@ -27,7 +27,5 @@ public class PlayerInput : MonoBehaviour
             touchPos = Input.GetMouseButton(0) ? Camera.ScreenToWorldPoint(Input.mousePosition) : Player.lastTouchPos;
             player.PlayerVerticalMove(touchPos);
         }
-
-        UiManager.Instance.DistanceUpdate();
     }
 }
