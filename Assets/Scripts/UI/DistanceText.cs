@@ -10,7 +10,7 @@ public class DistanceText : MonoBehaviour
     public float distance = 0;
     private void Awake()
     {
-        distanceTxt = gameObject.GetComponent<TextMeshProUGUI>();
+        distanceTxt = GetComponent<TextMeshProUGUI>();
     }
     public void DistanceUpdate()
     {

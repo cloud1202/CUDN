@@ -14,6 +14,8 @@ public class UiManager : UI_Base
     public GameObject gameMenu, option, textUi, formButton;
     [HideInInspector]
     public Button StartBtn, ExitBtn;
+    [HideInInspector]
+    public Image GaugeImage;
     // UI 이름 열거형으로 저장
     enum GameObjects { GameMenu, Option, TextUI, FormButton, EatterCoolDown, DefenderCoolDown, JumperCoolDown, BoosterCoolDown }
     enum Buttons { StartBtn, OptionBtn, ExitBtn, Eatter, Defender, Jumper, Booster }
@@ -64,17 +66,17 @@ public class UiManager : UI_Base
         StartBtn = base.Get<Button>((int)Buttons.StartBtn);
         ExitBtn = base.Get<Button>((int)Buttons.ExitBtn);
 
+        GaugeImage = base.Get<Image>((int)Images.Gauge);
+
         option.SetActive(false);
         textUi.SetActive(false);
         formButton.SetActive(false);
     }
 
-    public void DifficultyText()
+    public void DifficultyText(string LevelName)
     {
         // 난이도 Text 표시
-        if (GameManager.Instance.gameEasy) base.Get<TextMeshProUGUI>((int)Texts.DifficultyTxt).text = "Difficulty (Easy)";
-        else if (GameManager.Instance.gameNomal) base.Get<TextMeshProUGUI>((int)Texts.DifficultyTxt).text = "Difficulty (Nomal)";
-        else if (GameManager.Instance.gameHard) base.Get<TextMeshProUGUI>((int)Texts.DifficultyTxt).text = "Difficulty (Hard)";
+        base.Get<TextMeshProUGUI>((int)Texts.DifficultyTxt).text = $"Difficulty ({LevelName})";
     }
 
     public void InitText()
@@ -114,19 +116,6 @@ public class UiManager : UI_Base
         }
     }
 
-    public void StartBtnText()
-    {
-        if (base.Get<TextMeshProUGUI>((int)Texts.StartTxt).text == "Start")
-        {
-            base.Get<TextMeshProUGUI>((int)Texts.StartTxt).text = "RE START";
-            StartBtn.onClick.RemoveAllListeners();
-        }
-        else
-        {
-            base.Get<TextMeshProUGUI>((int)Texts.StartTxt).text = "Start";
-            StartBtn.onClick.RemoveAllListeners();
-        }
-    }
 
     //쿨다운 활성화
     public void CoolDownActivation(GameObject ability)
@@ -146,17 +135,4 @@ public class UiManager : UI_Base
         selectAbility.SetActive(false);
     }
 
-    public void BoosterGaugeFill()
-    {
-        if (Gauge.GaugeFill(base.Get<Image>((int)Images.Gauge))) 
-        {
-            // 부스터 UI 강조하는 메서드 추가
-            Player.isBoosterGauge = true;
-        }
-    }
-    public void BoosterGaugeEmpty()
-    {
-        //Gauge.GaugeEmpty(base.Get<Image>((int)Images.Gauge));
-        StartCoroutine(Gauge.GaugeEmpty(base.Get<Image>((int)Images.Gauge)));
-    }
 }

@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ItemGenerator : MonoBehaviour
+public class ItemGenerator : GeneratorManager<HorizontalMove>
 {
     public static ItemGenerator instance;
 
@@ -35,22 +34,25 @@ public class ItemGenerator : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
             isBomb = Random.Range(0, bombPer) > 0 ? false : true;
+            
             if (isBomb)
             {
-                var obj = GeneratorManager<BombMove>.Instance.GetObject(bombQueue, bombPrefab, instance.transform);
-                obj.transform.position = transform.position;
+                GeneratorManager<BombMove>.Instance.GetObject(bombQueue, bombPrefab, instance.transform).transform.position = transform.position;
             }
             else if (!isBomb)
             {
-                var obj = GeneratorManager<CoinMove>.Instance.GetObject(coinQueue, coinPrefab, instance.transform);
-                obj.transform.position = transform.position;
+                GeneratorManager<CoinMove>.Instance.GetObject(coinQueue, coinPrefab, instance.transform).transform.position = transform.position;
             }
         }
 
     }
-    public static void objectDestroy<T>(T obj) where T : BombMove
+    public static void objectDestroy(CoinMove obj)
     {
-       // GeneratorManager<T>.Instance.ReturnObject(obj, instance.bombQueue, instance.transform);
+        GeneratorManager<CoinMove>.Instance.ReturnObject(obj, instance.coinQueue, instance.transform);
+    }
+    public static void objectDestroy(BombMove obj)
+    {
+        GeneratorManager<BombMove>.Instance.ReturnObject(obj, instance.bombQueue, instance.transform);
     }
 
 }

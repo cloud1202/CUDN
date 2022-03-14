@@ -11,7 +11,7 @@ public class BombMove : HorizontalMove
         {
             playerPos = new Vector3();
             BombGenerator.objectDestroy(this);
-            if (Player.isDefence) { return; }
+            if (Player.IsDefence) { return; }
             GameManager.Instance.GameEnd();
         }
     }
@@ -19,8 +19,12 @@ public class BombMove : HorizontalMove
     {
         if (other.transform.name == "Absorption")
         {
-            playerPos = other.transform.parent.position;
+            playerPos = Player.IsAbsorption ? other.transform.parent.position : new Vector3();
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        playerPos = new Vector3();
     }
     private void Update()
     {

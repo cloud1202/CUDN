@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HorizontalMove : MonoBehaviour, IMove
 {
-    private int moveSpeed = 10;
+    private const float moveSpeed = 10.0f;
     protected float destroyPosX = -45.0f;
 
     public void ObjectMove(Vector3 finalPos = new Vector3())

@@ -5,27 +5,21 @@ using UnityEngine.EventSystems;
 
 public class PlayerInput : MonoBehaviour
 {
-    Player player;
-    Camera Camera;
-    Vector3 touchPos;
-    // Start is called before the first frame update
-    private void Awake()
-    {
-        player = GetComponent<Player>();
-        Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
-    }
+    private Camera Camera { get { return GameObject.Find("Main Camera").GetComponent<Camera>(); } }
+    private Vector3 touchPos;
+
     // Update is called once per frame
     void Update()
     {
         if (EventSystem.current.IsPointerOverGameObject()) { return; }
-        if (Input.GetMouseButtonDown(0) && (player.jumpCount > 0) && !Player.isBoost)
+        if (Input.GetMouseButtonDown(0) && (Player.jumpCount > 0) && !Player.IsBoost)
         {
-            player.PlayerJump();
+            Player.Instance.PlayerJump();
         }
-        else if(Player.isBoost)
+        else if(Player.IsBoost)
         {
             touchPos = Input.GetMouseButton(0) ? Camera.ScreenToWorldPoint(Input.mousePosition) : Player.lastTouchPos;
-            player.PlayerVerticalMove(touchPos);
+            Player.Instance.PlayerVerticalMove(touchPos);
         }
     }
 }

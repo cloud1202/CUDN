@@ -8,7 +8,8 @@ public class BoardGenerator : GeneratorManager<BoardMove>
     [SerializeField]
     private GameObject boardPrefab;
     Queue<BoardMove> boardQueue = new Queue<BoardMove>();
-    static int maxBoard = 40;
+    
+    //static int maxBoard = 40; 기본 개체가 존재하여 초기화 불필요
     static bool isBoard;
     public static int boardPer = 50;
     private void Awake()
@@ -18,15 +19,14 @@ public class BoardGenerator : GeneratorManager<BoardMove>
 
     void Start()
     {
-        GeneratorManager<BoardMove>.Instance.Initialize(boardQueue, maxBoard, boardPrefab, instance.transform);
+        //GeneratorManager<BoardMove>.Instance.Initialize(boardQueue, maxBoard, boardPrefab, instance.transform);
         StartCoroutine(Spawn());
     }
     IEnumerator Spawn()
     {
         while (true)
         {
-            //isBoard = Random.Range(0, boardPer) > 0 ? true : false;
-            isBoard = true;
+            isBoard = Random.Range(0, boardPer) > 0 ? true : false;
             yield return new WaitForSeconds(0.48f);
             if (isBoard)
             {

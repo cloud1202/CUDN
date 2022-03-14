@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,17 +9,21 @@ public class GameManager : MonoBehaviour
     private GameManager() { }
     private static GameManager instance;
 
-    public GameObject playObjects;
     [SerializeField]
-    public bool gameEasy;
-    [SerializeField]
-    public bool gameNomal;
-    [SerializeField]
-    public bool gameHard;
-    [HideInInspector]
-    public bool isGame;
-    private bool isSetting = false;
+    public enum Level
+    {
+        Easy = 1, Normal = 2, Hard = 4
+    }
 
+    private static bool _isPause = false;
+    private static Level _currentLevel = Level.Easy;
+    private static GameObject _player;
+    public static bool IsGame { get; set; } = false;
+    public static bool IsStop { get { return Time.timeScale > 0 ? true : false; } }
+    public static bool IsPause { get { return _isPause; } set{ _isPause = value;} }
+    public static int IntLevel { get {return (int)_currentLevel;} set { _currentLevel = (Level)value; } }
+    
+    public static GameObject PlayerObject { get { if (!_player){ _player = GameObject.Find("CUDN_Player");} return _player; } }
     public static GameManager Instance
     {
         get
@@ -33,7 +38,7 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
-        playObjects.SetActive(false);
+        PlayerObject.SetActive(false);
         Time.timeScale = 0;
         if (instance)
         {
@@ -48,49 +53,43 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // ESC키 누를 시 게임 일시정지 단, 게임이 진행중일 경우
-        if (Input.GetKeyDown(KeyCode.Escape) && isGame)
+        if (Input.GetKeyDown(KeyCode.Escape) && IsGame)
         {
-            GameStop();
+            GameStop(IsPause);
         }
         UiManager.Instance.DistanceUpdate();
-
     }
-
+    public void GameReset(bool objectActive)
+    {
+        UiManager.Instance.textUi.SetActive(objectActive);
+        UiManager.Instance.formButton.SetActive(objectActive);
+        UiManager.Instance.ExitBtnText();
+        UiManager.Instance.InitText();
+        Player.Instance.InitPlayer();
+        Gauge.GaugeReset();
+        PlayerObject.SetActive(objectActive);
+    }
     public void OnClickStartBtn()
     {
+        IsGame = true;
         
-            isGame = true;
-            UiManager.Instance.gameMenu.SetActive(false);
-            UiManager.Instance.textUi.SetActive(true);
-            UiManager.Instance.formButton.SetActive(true);
-            UiManager.Instance.ExitBtnText();
-            UiManager.Instance.InitText();
-            playObjects.SetActive(true);
-            Time.timeScale = 1;
-        
+        UiManager.Instance.gameMenu.SetActive(false);
+        GameReset(true);
+        SceneManager.LoadScene("InGame");
+        Time.timeScale = 1;
     }
 
-    public void GameReset()
+    public void GameStop(bool isPause)
     {
-    }
-    public void GameStop()
-    {
-        if (Time.timeScale > 0)
-        {
-            Time.timeScale = 0;
-            UiManager.Instance.gameMenu.SetActive(true);
-        }
-        else
-        {
-            Time.timeScale = 1;
-            UiManager.Instance.gameMenu.SetActive(false);
-        }
+        Time.timeScale = Convert.ToInt32(isPause);
+        IsPause = !isPause;
+        UiManager.Instance.gameMenu.SetActive(!isPause);
     }
 
     public void GameEnd()
     {
-        isGame = false;
         Time.timeScale = 0;
+        IsGame = false;
         UiManager.Instance.ExitBtnText();
         UiManager.Instance.gameMenu.SetActive(true);
         UiManager.Instance.GameMenuTitle();
@@ -98,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     public void OnClickExitBtn()
     {
-        if (!isGame)
+        if (SceneManager.GetActiveScene().name == "GameLobby")
         {
             // 실행 프로그램에 따라 다른 종료 방법
 #if UNITY_EDITOR
@@ -109,58 +108,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("sample");
-            UiManager.Instance.textUi.SetActive(false);
-            UiManager.Instance.formButton.SetActive(false);
-            UiManager.Instance.ExitBtnText();
-            UiManager.Instance.InitText();
-            playObjects.SetActive(false);
-            Time.timeScale = 1;
+            GameReset(false);
+            SceneManager.LoadScene("GameLobby");
         }
-       
-    }
-    public void DifficultyEasy()
-    {
-        if (SceneManager.GetActiveScene().name == "GameScene") return;
-        gameEasy = true;
-        gameNomal = false;
-        gameHard = false;
-        UiManager.Instance.DifficultyText();
-    }
 
-    public void DifficultyNomal()
-    {
-        if (SceneManager.GetActiveScene().name == "GameScene") return;
-        gameEasy = false;
-        gameNomal = true;
-        gameHard = false;
-        BombGenerator.bombPer = 250;
-        BoardGenerator.boardPer = 25;
-        UiManager.Instance.DifficultyText();
     }
-    public void DifficultyHard()
+    public void Setting(bool enableOption)
     {
-        if (SceneManager.GetActiveScene().name == "GameScene") return;
-        gameEasy = false;
-        gameNomal = false;
-        gameHard = true;
-        BombGenerator.bombPer = 125;
-        BoardGenerator.boardPer = 13;
-        UiManager.Instance.DifficultyText();
-    }
-    public void Setting()
-    {
-        if (isSetting)
-        {
-            UiManager.Instance.option.SetActive(false);
-            UiManager.Instance.gameMenu.SetActive(true);
-            isSetting = false;
-        }
-        else
-        {
-            UiManager.Instance.option.SetActive(true);
-            UiManager.Instance.gameMenu.SetActive(false);
-            isSetting = true;
-        }
+        UiManager.Instance.option.SetActive(enableOption);
+        UiManager.Instance.gameMenu.SetActive(!enableOption);
     }
 }

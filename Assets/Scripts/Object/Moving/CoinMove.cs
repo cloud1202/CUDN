@@ -10,9 +10,9 @@ public class CoinMove : HorizontalMove
         if (other.tag == "Player")
         {
             playerPos = new Vector3();
-            if (!Player.isBoosterGauge)
+            if (!Player.IsBoost)
             {
-                UiManager.Instance.BoosterGaugeFill();
+                Gauge.GaugeFill();
             }
             CoinGenerator.objectDestroy(this);
             UiManager.Instance.ScoreUpdate();
@@ -22,7 +22,7 @@ public class CoinMove : HorizontalMove
     {
         if (other.transform.name == "Absorption")
         {
-            playerPos = other.transform.parent.position;
+            playerPos = Player.IsAbsorption ? other.transform.parent.position : new Vector3();
         }
     }
     private void Update()
