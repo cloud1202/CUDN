@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour
 {
-    public void ClickAbility(GameObject ability)
+    private void Start()
     {
-        if (Player.ability == ability.name || Player.IsBoost || (ability.name == "Booster" && !Gauge.IsBoosterGauge)) { return; }
+        UiManager.Instance.AddListnerEvent(UiManager.Buttons.Eatter, () => ClickAbility(UiManager.Buttons.Eatter));
+        UiManager.Instance.AddListnerEvent(UiManager.Buttons.Defender, () => ClickAbility(UiManager.Buttons.Defender));
+        UiManager.Instance.AddListnerEvent(UiManager.Buttons.Jumper, () => ClickAbility(UiManager.Buttons.Jumper));
+        UiManager.Instance.AddListnerEvent(UiManager.Buttons.Booster, () => ClickAbility(UiManager.Buttons.Booster));
+    }
+    public void ClickAbility(UiManager.Buttons ability)
+    {
+        if (Player.ability == ability || Player.IsBoost || (ability.Equals(UiManager.Buttons.Booster) && !Gauge.IsBoosterGauge)) { return; }
         
-        if (ability.name == "Booster" && Gauge.IsBoosterGauge) { StartCoroutine(Gauge.GaugeEmpty()); }
+        if (ability.Equals(UiManager.Buttons.Booster) && Gauge.IsBoosterGauge) { StartCoroutine(Gauge.GaugeEmpty()); }
         
-        Player.ability = ability.name;
+        Player.ability = ability;
         float coolDownTime = 1.0f;
         AbilityCoolDown.instance.CoolDownEnable(ability, coolDownTime);
     }

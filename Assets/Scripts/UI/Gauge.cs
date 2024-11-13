@@ -29,7 +29,7 @@ public class Gauge : MonoBehaviour
         }
         Player.Instance.PlayerRb.useGravity = true;
         Time.timeScale = 1;
-        Player.ability = "Eatter";
+        Player.ability = UiManager.Buttons.Eatter;
         yield return null;
     }
 }

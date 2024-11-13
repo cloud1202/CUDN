@@ -13,16 +13,16 @@ public class Player : MonoBehaviour
 
     // player status
     [HideInInspector]
-    public static bool IsDefence { get { return ability.Equals("Defender") || Player.IsBoost ? true : false; } }
+    public static bool IsDefence { get { return ability.Equals(UiManager.Buttons.Defender) || Player.IsBoost ? true : false; } }
     [HideInInspector]
-    public static int maxJump { get { return ability.Equals("Jumper") ? 2 : 1; } }
-    public static bool IsAbsorption { get { return ability.Equals("Eatter") || Player.IsBoost ? true : false; } }
+    public static int maxJump { get { return ability.Equals(UiManager.Buttons.Jumper) ? 2 : 1; } }
+    public static bool IsAbsorption { get { return ability.Equals(UiManager.Buttons.Eatter) || Player.IsBoost ? true : false; } }
     [HideInInspector]
     public static bool IsBoost { get { return !Player.Instance.PlayerRb.useGravity; } }
 
     // 기본 능력 -> [흡입 능력]
     [HideInInspector]
-    public static string ability = "Eatter";
+    public static UiManager.Buttons ability = UiManager.Buttons.Eatter;
 
     private static float speed;
     //
@@ -38,7 +38,9 @@ public class Player : MonoBehaviour
         {
             if (null == instance)
             {
-                return null;
+                GameObject go = new GameObject();
+                instance = go.AddComponent<Player>();
+                DontDestroyOnLoad(instance.gameObject);
             }
             return instance;
         }
@@ -64,7 +66,7 @@ public class Player : MonoBehaviour
         lastTouchPos = transform.position;
         PlayerRb.velocity = Vector3.zero;
         jumpCount = maxJump;
-        ability = "Eatter";
+        ability = UiManager.Buttons.Eatter;
     }
     public void PlayerJump()
     {

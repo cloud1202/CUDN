@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.Events;
 
 public class UiManager : UI_Base
 {
@@ -18,7 +19,7 @@ public class UiManager : UI_Base
     public Image GaugeImage;
     // UI 이름 열거형으로 저장
     enum GameObjects { GameMenu, Option, TextUI, FormButton, EatterCoolDown, DefenderCoolDown, JumperCoolDown, BoosterCoolDown }
-    enum Buttons { StartBtn, OptionBtn, ExitBtn, Eatter, Defender, Jumper, Booster }
+    public enum Buttons { StartBtn, OptionBtn, ExitBtn, Eatter, Defender, Jumper, Booster }
     enum Images { Gauge}
     enum Texts { MenuTitleTxt, StartTxt, OptionTxt, ExitTxt, DifficultyTxt, EasyTxt, NomalTxt, BackTxt, DistanceTxt, ItemEatTxt }
     public static UiManager Instance
@@ -27,11 +28,15 @@ public class UiManager : UI_Base
         {
             if (null == instance)
             {
-                return null;
+                GameObject go = new GameObject();
+                instance = go.AddComponent<UiManager>();
+                DontDestroyOnLoad(instance.gameObject);
+                instance.InitBind();
             }
             return instance;
         }
     }
+
     private void Awake()
     {
         if (instance)
@@ -43,9 +48,9 @@ public class UiManager : UI_Base
         instance = this;
         // GameManager 오브젝트는 Scene이 변경되어도 존재
         DontDestroyOnLoad(this.gameObject);
+        InitBind();
     }
-
-    private void Start()
+    private void InitBind()
     {
         // hierarchy에 이름과 동일한 오브젝트 찾아서 저장
         base.Bind<GameObject>(typeof(GameObjects));
@@ -118,21 +123,26 @@ public class UiManager : UI_Base
 
 
     //쿨다운 활성화
-    public void CoolDownActivation(GameObject ability)
+    public void CoolDownActivation(Buttons ability)
     {
-        GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), ability.name + "CoolDown"));
+        GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), string.Format("{0}{1}", ability.ToString(), "CoolDown")));
         selectAbility.SetActive(true);
     }
 
-    public void CoolDownTimeUpdate(GameObject ability, float coolDownTime)
+    public void CoolDownTimeUpdate(Buttons ability, float coolDownTime)
     {
-        GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), ability.name+"CoolDown"));
+        GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), string.Format("{0}{1}", ability.ToString(), "CoolDown")));
         selectAbility.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{coolDownTime:F1}";
     }
-    public void CoolDownDisable(GameObject ability)
+    public void CoolDownDisable(Buttons ability)
     {
-        GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), ability.name + "CoolDown"));
+        GameObject selectAbility = base.Get<GameObject>((int)Enum.Parse(typeof(GameObjects), string.Format("{0}{1}", ability.ToString(), "CoolDown")));
         selectAbility.SetActive(false);
+    }
+    
+    public void AddListnerEvent(Buttons button, UnityAction action)
+    {
+        base.Get<Button>((int)button).onClick.AddListener(action);
     }
 
 }

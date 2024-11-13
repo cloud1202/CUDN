@@ -5,13 +5,19 @@ using TMPro;
 
 public class DistanceText : MonoBehaviour
 {
-    [HideInInspector]
-    private TextMeshProUGUI distanceTxt;
-    public float distance = 0;
-    private void Awake()
+    private TextMeshProUGUI m_distanceTxt;
+    public TextMeshProUGUI distanceTxt
     {
-        distanceTxt = GetComponent<TextMeshProUGUI>();
+        get
+        {
+            if (m_distanceTxt == null)
+                m_distanceTxt = GetComponent<TextMeshProUGUI>();
+
+            return m_distanceTxt;
+        }
     }
+    public float distance = 0;
+
     public void DistanceUpdate()
     {
         distance += Time.deltaTime;

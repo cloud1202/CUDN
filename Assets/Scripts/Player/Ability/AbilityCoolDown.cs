@@ -14,16 +14,16 @@ public class AbilityCoolDown : MonoBehaviour
         instance = this;
     }
 
-    public void CoolDownEnable(GameObject ability, float coolDownTime)
+    public void CoolDownEnable(UiManager.Buttons ability, float coolDownTime)
     {
         UiManager.Instance.CoolDownActivation(ability);
         StartCoroutine(CoolDownTime(ability, coolDownTime));
     }
-    public void CoolDownDisable(GameObject ability, float coolDownTime)
+    public void CoolDownDisable(UiManager.Buttons ability, float coolDownTime)
     {
         StopCoroutine(CoolDownTime(ability, coolDownTime));
     }
-    public IEnumerator CoolDownTime(GameObject ability, float coolDownTime)
+    public IEnumerator CoolDownTime(UiManager.Buttons ability, float coolDownTime)
     {
         while (coolDownTime > 0.0f)
         {

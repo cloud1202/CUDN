@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public static bool IsPause { get { return _isPause; } set{ _isPause = value;} }
     public static int IntLevel { get {return (int)_currentLevel;} set { _currentLevel = (Level)value; } }
     
-    public static GameObject PlayerObject { get { if (!_player){ _player = GameObject.Find("CUDN_Player");} return _player; } }
+    public static GameObject PlayerObject { get => _player; }
     public static GameManager Instance
     {
         get
@@ -36,9 +36,12 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
+
+    [SerializeField] private GameObject m_uiManager;
+    [SerializeField] private GameObject m_player;
+
     private void Awake()
     {
-        PlayerObject.SetActive(false);
         Time.timeScale = 0;
         if (instance)
         {
@@ -49,6 +52,12 @@ public class GameManager : MonoBehaviour
         instance = this;
         // GameManager 오브젝트는 Scene이 변경되어도 존재
         DontDestroyOnLoad(this.gameObject);
+
+        Instantiate(m_uiManager);
+        _player = Instantiate(m_player);
+        PlayerObject.SetActive(false);
+        UiManager.Instance.AddListnerEvent(UiManager.Buttons.StartBtn, OnClickStartBtn);
+        UiManager.Instance.AddListnerEvent(UiManager.Buttons.ExitBtn, OnClickExitBtn);
     }
     void Update()
     {
@@ -61,12 +70,25 @@ public class GameManager : MonoBehaviour
     }
     public void GameReset(bool objectActive)
     {
+        Debug.Log($"Step1");
         UiManager.Instance.textUi.SetActive(objectActive);
+
+        Debug.Log($"Step2");
         UiManager.Instance.formButton.SetActive(objectActive);
+
+        Debug.Log($"Step3");
         UiManager.Instance.ExitBtnText();
+
+        Debug.Log($"Step4");
         UiManager.Instance.InitText();
+
+        Debug.Log($"Step5");
         Player.Instance.InitPlayer();
+
+        Debug.Log($"Step6");
         Gauge.GaugeReset();
+
+        Debug.Log($"Step7");
         PlayerObject.SetActive(objectActive);
     }
     public void OnClickStartBtn()
