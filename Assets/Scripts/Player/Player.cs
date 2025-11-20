@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     {
         transform.position = PlayerPos;
         lastTouchPos = transform.position;
-        PlayerRb.velocity = Vector3.zero;
+        PlayerRb.linearVelocity = Vector3.zero;
         jumpCount = maxJump;
         ability = UiManager.Buttons.Eatter;
     }
